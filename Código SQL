@@ -1,0 +1,74 @@
+CREATE TABLE funcionario 
+( 
+    id_funcionario INT PRIMARY KEY,  
+    nome VARCHAR(255),  
+    endereco VARCHAR(255),  
+    cargo VARCHAR(255),  
+    id_entrega INT
+); 
+
+CREATE TABLE produto 
+( 
+    id_produto INT PRIMARY KEY,  
+    descricao VARCHAR(255),  
+    id_estoque INT  
+); 
+
+CREATE TABLE pedido 
+( 
+    id_pedido INT PRIMARY KEY,  
+    descricao VARCHAR(255)
+); 
+
+CREATE TABLE entrega 
+( 
+    id_entrega INT PRIMARY KEY,  
+    id_funcionario INT
+); 
+
+CREATE TABLE loja 
+( 
+    endereco VARCHAR(255),  
+    id_loja INT PRIMARY KEY,  
+    id_funcionario INT  
+); 
+
+CREATE TABLE estoque 
+( 
+    id_estoque INT PRIMARY KEY,  
+    quantidade INT,  
+    id_entrega INT
+); 
+
+CREATE TABLE cliente 
+( 
+    cnpj INT,  
+    cpf INT,  
+    endereco VARCHAR(255),  
+    id_cliente INT PRIMARY KEY,  
+    nome VARCHAR(255),  
+    id_pedido INT
+); 
+
+CREATE TABLE atendimento 
+( 
+    id_cliente INT,  
+    id_funcionario INT
+); 
+
+CREATE TABLE item_pedido 
+( 
+    id_produto INT,  
+    id_pedido INT
+); 
+
+ALTER TABLE funcionario ADD FOREIGN KEY(id_entrega) REFERENCES entrega (id_entrega);
+ALTER TABLE produto ADD FOREIGN KEY(id_estoque) REFERENCES estoque (id_estoque);
+ALTER TABLE entrega ADD FOREIGN KEY(id_funcionario) REFERENCES funcionario (id_funcionario);
+ALTER TABLE loja ADD FOREIGN KEY(id_funcionario) REFERENCES funcionario (id_funcionario);
+ALTER TABLE estoque ADD FOREIGN KEY(id_entrega) REFERENCES entrega (id_entrega);
+ALTER TABLE cliente ADD FOREIGN KEY(id_pedido) REFERENCES pedido (id_pedido);
+ALTER TABLE atendimento ADD FOREIGN KEY(id_cliente) REFERENCES cliente (id_cliente);
+ALTER TABLE atendimento ADD FOREIGN KEY(id_funcionario) REFERENCES funcionario (id_funcionario);
+ALTER TABLE item_pedido ADD FOREIGN KEY(id_produto) REFERENCES produto (id_produto);
+ALTER TABLE item_pedido ADD FOREIGN KEY(id_pedido) REFERENCES pedido (id_pedido);
